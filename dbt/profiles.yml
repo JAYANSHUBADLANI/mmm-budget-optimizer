@@ -1,0 +1,13 @@
+# DuckDB rather than a warehouse, so the whole stack runs on a laptop with no cloud account.
+# The transformations are plain SQL and would move to Snowflake or BigQuery unchanged apart
+# from this file.
+mmm_marts:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../data/processed/mmm.duckdb
+      threads: 4
+      extensions:
+        - httpfs
+        - parquet

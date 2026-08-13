@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: raw
+    description: >
+      The primary Kaggle export, read straight from CSV by DuckDB. Loaded by the
+      load_raw_to_duckdb task in the Airflow DAG.
+    schema: main
+    tables:
+      - name: sample_media_spend
+        description: Division by week media volumes and sales, 2018 to 2020.
+        columns:
+          - name: division
+            description: Sales division, A to Z.
+          - name: calendar_week
+            description: Week start date as a string in the source file.
+          - name: sales
+            description: Weekly sales in currency.

@@ -1,0 +1,57 @@
+# Data. I keep raw and derived data out of the repo and regenerate it with scripts/fetch_data.py.
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+!data/**/.gitkeep
+
+# Model artefacts. InferenceData objects run to tens of megabytes, too large to version.
+models/*.nc
+models/*.pkl
+*.nc
+*.netcdf
+
+# Generated outputs
+reports/figures/*
+reports/tables/*
+!reports/**/.gitkeep
+
+# Secrets
+.env
+kaggle.json
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.python-version
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+# dbt
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+*.duckdb
+
+# Airflow
+airflow/logs/
+airflow/airflow.db
+airflow/airflow.cfg
+airflow/webserver_config.py
+
+# OS
+.DS_Store
+Thumbs.db

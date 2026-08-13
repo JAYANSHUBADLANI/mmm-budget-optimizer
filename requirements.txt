@@ -1,0 +1,36 @@
+# Core scientific stack
+numpy>=1.26,<3.0
+pandas>=2.1
+scipy>=1.11
+scikit-learn>=1.3
+statsmodels>=0.14
+
+# Bayesian modelling
+pymc>=5.10
+arviz>=0.17
+pytensor>=2.18
+
+# Config, IO, plotting
+pyyaml>=6.0
+matplotlib>=3.8
+seaborn>=0.13
+pyreadr>=0.5.0
+python-dotenv>=1.0
+
+# Enrichment sources
+holidays>=0.40
+pytrends>=4.9.2
+fredapi>=0.5.1
+requests>=2.31
+
+# Data acquisition
+kaggle>=1.6.0
+
+# Dashboard
+streamlit>=1.30
+plotly>=5.18
+
+# Testing and quality
+pytest>=7.4
+pytest-cov>=4.1
+ruff>=0.3.0

@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: gold_media_spend_weekly
+    description: >
+      Modelling mart. Division by week, impressions plus assumed spend at the documented
+      CPM rates. Every currency column here inherits an assumption, see
+      docs/cpm_assumptions.md.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - division
+            - calendar_week
+    columns:
+      - name: total_assumed_spend
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+
+  - name: gold_channel_summary
+    columns:
+      - name: channel
+        tests:
+          - unique
+          - not_null
+      - name: share_of_budget
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
+              inclusive: true
+
+  - name: gold_division_summary
+    columns:
+      - name: division
+        tests:
+          - unique
+          - not_null
+      - name: n_weeks
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 113
+              max_value: 113
+              inclusive: true

@@ -1,0 +1,21 @@
+# Airflow image. Built on the official base so the provider versions stay consistent, with
+# the project's own dependencies layered on top under Airflow's constraint file.
+FROM apache/airflow:2.9.3-python3.11
+
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential g++ git \
+    && rm -rf /var/lib/apt/lists/*
+USER airflow
+
+ENV PYTHONPATH=/opt/project/src \
+    MMM_PROJECT_ROOT=/opt/project
+
+COPY requirements.txt /tmp/requirements.txt
+COPY requirements-pipeline.txt /tmp/requirements-pipeline.txt
+
+# The constraint file is what stops a transitive dependency from silently upgrading one of
+# Airflow's own pins and breaking the scheduler at runtime.
+RUN pip install --no-cache-dir -r /tmp/requirements.txt \
+        --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.3/constraints-3.11.txt" \
+    && pip install --no-cache-dir dbt-core dbt-duckdb duckdb

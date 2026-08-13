@@ -1,0 +1,72 @@
+version: 2
+
+models:
+  - name: silver_media_spend
+    description: >
+      Deduplicated division by week panel. This is the grain every downstream model and the
+      Python modelling code assumes.
+    tests:
+      # The test that catches the Division Z class of bug. It failed on the raw data, which
+      # is why it is here. Running it against silver proves the fix holds after every load.
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - division
+            - calendar_week
+      - dbt_utils.expression_is_true:
+          expression: "count(*) = {{ var('expected_divisions') }} * {{ var('expected_weeks') }}"
+          config:
+            severity: warn
+    columns:
+      - name: division
+        description: Sales division, A to Z.
+        tests:
+          - not_null
+      - name: calendar_week
+        description: Week start date.
+        tests:
+          - not_null
+      - name: sales
+        description: Weekly sales in currency.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+      - name: google_impressions
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+      - name: facebook_impressions
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+      - name: email_impressions
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+      - name: affiliate_impressions
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+      - name: paid_views
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+
+  - name: silver_data_quality_log
+    description: Per division record of what the cleaning step removed and why.
+    columns:
+      - name: division
+        tests:
+          - unique
+          - not_null

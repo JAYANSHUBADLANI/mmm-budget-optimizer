@@ -1,0 +1,29 @@
+name: mmm_marts
+version: "1.0.0"
+config-version: 2
+profile: mmm_marts
+
+model-paths: ["models"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  # The panel grain. Every uniqueness test keys on this pair.
+  entity_column: division
+  date_column: calendar_week
+  expected_weeks: 113
+  expected_divisions: 26
+
+models:
+  mmm_marts:
+    bronze:
+      +materialized: view
+      +schema: bronze
+    silver:
+      +materialized: table
+      +schema: silver
+    gold:
+      +materialized: table
+      +schema: gold
