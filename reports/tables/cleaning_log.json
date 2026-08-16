@@ -1,0 +1,16 @@
+{
+  "rows_in": 3051,
+  "rows_out": 2938,
+  "rows_removed": 113,
+  "exact_duplicates_removed": 0,
+  "duplicate_entities": {
+    "Z": 226
+  },
+  "conflicting_key_rows": 226,
+  "dropped_columns": [],
+  "notes": [
+    "Averaged 113 conflicting key collisions across 2938 groups because on_conflict='average' was set. Chosen over summing or keeping one source because the averaged values land close to the typical entity's scale, while summing would make the affected entity roughly double every other entity in the panel.",
+    "Kept Overall_Views. It is not the exact sum of ['Organic_Views', 'Paid_Views'], maximum relative difference 954.5, so it carries information those columns do not.",
+    "Final panel: 26 divisions by 113 weeks, 2938 rows."
+  ]
+}

@@ -1,0 +1,5 @@
+approach,predicted_sales,respects_constraints,share_of_budget_moved,uplift_vs_current_pct
+current allocation,505179404.3450239,True,0.0,0.0
+"proportional to average ROI, unconstrained",379641221.61635196,False,0.9673431392645743,-24.850217892678128
+"proportional to average ROI, made executable",556940598.4365476,True,0.009254115150636885,10.24610141393893
+constrained optimiser,662957109.7457213,True,0.031206850687258213,31.23201461573037

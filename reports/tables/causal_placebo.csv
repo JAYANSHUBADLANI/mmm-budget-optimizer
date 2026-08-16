@@ -1,0 +1,6 @@
+channel,status,real_estimate_log_points,n_placebos,placebo_mean,placebo_sd,randomisation_p_value,interpretation
+Google_Impressions,ok,-0.10864223786974421,50.0,0.011846936200197748,0.051033947875187384,0.04,The p value is the share of random placebo assignments producing an effect at least as large in absolute value as the real one. Small means the real shock stands out from noise.
+Facebook_Impressions,ok,0.030438367964936333,50.0,0.20662675526644836,0.477671115801167,0.84,The p value is the share of random placebo assignments producing an effect at least as large in absolute value as the real one. Small means the real shock stands out from noise.
+Email_Impressions,insufficient_treated_units,,,,,,
+Affiliate_Impressions,ok,-0.0013288903572019443,50.0,-0.00095403907502965,0.028066985407676447,1.0,The p value is the share of random placebo assignments producing an effect at least as large in absolute value as the real one. Small means the real shock stands out from noise.
+Paid_Views,ok,-0.01604198308593667,50.0,0.20662675526644836,0.477671115801167,0.94,The p value is the share of random placebo assignments producing an effect at least as large in absolute value as the real one. Small means the real shock stands out from noise.

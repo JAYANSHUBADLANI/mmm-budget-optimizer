@@ -1,0 +1,9 @@
+check,passed,severity,message
+no_missing_values,True,error,No missing values
+exact_duplicate_rows,True,warning,No exact duplicate rows
+primary_key_unique,False,error,"226 rows violate uniqueness on ['Division', 'Calendar_Week']. Offending entities: {'Z': 226}"
+balanced_panel,True,error,"Panel is balanced, every entity has 113 distinct periods"
+non_negative_measures,True,error,All measure columns are non negative
+channel_has_variance,True,error,Every channel varies
+derived_check_Overall_Views,True,warning,"Overall_Views is not the exact sum of ['Organic_Views', 'Paid_Views'], max relative difference 954.5"
+weekly_date_continuity,False,error,Entities with irregular week spacing: {'Z': 113}

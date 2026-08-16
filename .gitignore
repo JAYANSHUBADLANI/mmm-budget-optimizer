@@ -11,10 +11,9 @@ models/*.pkl
 *.nc
 *.netcdf
 
-# Generated outputs
-reports/figures/*
-reports/tables/*
-!reports/**/.gitkeep
+# Generated outputs. The tables and figures are versioned: the README, the executive summary
+# and the limitations note all cite them by filename, so a clone without them cannot check the
+# claims. The fitted posterior above stays out, it is 91 MB.
 
 # Secrets
 .env

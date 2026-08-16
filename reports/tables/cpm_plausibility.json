@@ -1,0 +1,8 @@
+{
+  "total_assumed_spend": 147115643.06346524,
+  "total_revenue": 550276602.5,
+  "spend_share_of_revenue": 0.2673485341646254,
+  "plausible": false,
+  "guidance": "ROI scales inversely with assumed spend. A share outside the typical band means the CPM assumptions, not the model, are driving the headline number.",
+  "suggested_uniform_cpm_scaling": 0.3740435694269523
+}

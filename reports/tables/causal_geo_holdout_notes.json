@@ -1,0 +1,14 @@
+{
+  "holdout_divisions": [
+    "C",
+    "T",
+    "R",
+    "M",
+    "L"
+  ],
+  "notes": [
+    "Fitted on 21 divisions, predicted 5 unseen divisions using only the pooled channel level parameters.",
+    "The comparison that matters is held_out_divisions against held_out_divisions_baseline. If the media terms transfer, the full model beats the media free baseline on divisions it never saw.",
+    "MAPE improvement over the media free baseline on unseen divisions: 49.39 percentage points."
+  ]
+}

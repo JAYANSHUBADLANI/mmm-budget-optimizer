@@ -1,0 +1,13 @@
+{
+  "all_channels_positive": true,
+  "all_intervals_exclude_zero": true,
+  "holdout_mape": 2.8675578326596494,
+  "holdout_mape_under_30pct": true,
+  "n_divergences": 409,
+  "media_share_of_sales": 0.18090654610453108,
+  "media_share_plausible": true,
+  "smoke_mode": false,
+  "no_divergences": false,
+  "all_checks_passed": false,
+  "caveat": "409 divergent transitions during sampling. NUTS did not fully explore the posterior, so the contribution and interval estimates above are not reliable enough to quote. Increase target_accept or reparameterize the model before trusting this benchmark."
+}

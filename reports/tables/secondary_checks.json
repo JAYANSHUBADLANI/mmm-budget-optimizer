@@ -1,0 +1,12 @@
+{
+  "pipeline_ran_end_to_end": true,
+  "n_channels": 6,
+  "n_observations": 300,
+  "holdout_mape": 1.04507589173005,
+  "all_contributions_positive": true,
+  "median_relative_hdi_width": 0.06919196786248574,
+  "intervals_appropriately_wide": false,
+  "n_divergences": 272,
+  "smoke_mode": false,
+  "interpretation": "The claim supported by this run is that the same code fits a different channel mix without modification. With this few observations the parameter estimates are weakly identified and should not be quoted as findings."
+}

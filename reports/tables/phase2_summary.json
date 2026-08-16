@@ -1,0 +1,45 @@
+{
+  "smoke_mode": false,
+  "benchmark": {
+    "all_channels_positive": true,
+    "all_intervals_exclude_zero": true,
+    "holdout_mape": 2.8675578326596494,
+    "holdout_mape_under_30pct": true,
+    "n_divergences": 409,
+    "media_share_of_sales": 0.18090654610453108,
+    "media_share_plausible": true,
+    "smoke_mode": false,
+    "no_divergences": false,
+    "all_checks_passed": false,
+    "caveat": "409 divergent transitions during sampling. NUTS did not fully explore the posterior, so the contribution and interval estimates above are not reliable enough to quote. Increase target_accept or reparameterize the model before trusting this benchmark."
+  },
+  "generalisation": {
+    "pipeline_ran_end_to_end": true,
+    "n_channels": 6,
+    "n_observations": 300,
+    "holdout_mape": 1.04507589173005,
+    "all_contributions_positive": true,
+    "median_relative_hdi_width": 0.06919196786248574,
+    "intervals_appropriately_wide": false,
+    "n_divergences": 272,
+    "smoke_mode": false,
+    "interpretation": "The claim supported by this run is that the same code fits a different channel mix without modification. With this few observations the parameter estimates are weakly identified and should not be quoted as findings."
+  },
+  "causal": {
+    "geo_holdout_divisions": [
+      "C",
+      "T",
+      "R",
+      "M",
+      "L"
+    ],
+    "geo_holdout_notes": [
+      "Fitted on 21 divisions, predicted 5 unseen divisions using only the pooled channel level parameters.",
+      "The comparison that matters is held_out_divisions against held_out_divisions_baseline. If the media terms transfer, the full model beats the media free baseline on divisions it never saw.",
+      "MAPE improvement over the media free baseline on unseen divisions: 49.39 percentage points."
+    ],
+    "n_channels_with_did_estimate": 4,
+    "n_channels_skipped_for_too_few_treated": 1
+  },
+  "runtime_seconds": 898.1
+}

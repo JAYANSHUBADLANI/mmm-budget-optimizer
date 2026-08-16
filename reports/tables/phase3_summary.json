@@ -1,0 +1,84 @@
+{
+  "total_assumed_budget": 147115643.06346524,
+  "cpm_plausibility": {
+    "total_assumed_spend": 147115643.06346524,
+    "total_revenue": 550276602.5,
+    "spend_share_of_revenue": 0.2673485341646254,
+    "plausible": false,
+    "guidance": "ROI scales inversely with assumed spend. A share outside the typical band means the CPM assumptions, not the model, are driving the headline number.",
+    "suggested_uniform_cpm_scaling": 0.3740435694269523
+  },
+  "optimiser": {
+    "success": true,
+    "message": "Optimization terminated successfully",
+    "total_budget": 147115643.06346524,
+    "predicted_sales_current": 505179404.3450239,
+    "predicted_sales_optimal": 662957109.7457213,
+    "uplift_absolute": 157777705.40069747,
+    "uplift_pct": 31.23201461573037,
+    "binding_constraints": [
+      "Email_Impressions at its cap of 160% of current spend",
+      "Affiliate_Impressions at its cap of 160% of current spend",
+      "Paid_Views at its cap of 160% of current spend"
+    ],
+    "notes": [
+      "Binding constraints mean the unconstrained optimum is more extreme than this recommendation. The gap between them is the cost of executability.",
+      "10 of 12 restarts converged, objective spread 4.08e-02 in relative terms.",
+      "Restarts disagreed by more than a rounding error, so I treat the surface as multimodal here and report the best of the restarts."
+    ]
+  },
+  "approach_comparison": [
+    {
+      "approach": "current allocation",
+      "predicted_sales": 505179404.3450239,
+      "respects_constraints": true,
+      "share_of_budget_moved": 0.0,
+      "uplift_vs_current_pct": 0.0
+    },
+    {
+      "approach": "proportional to average ROI, unconstrained",
+      "predicted_sales": 379641221.61635196,
+      "respects_constraints": false,
+      "share_of_budget_moved": 0.9673431392645743,
+      "uplift_vs_current_pct": -24.850217892678128
+    },
+    {
+      "approach": "proportional to average ROI, made executable",
+      "predicted_sales": 556940598.4365476,
+      "respects_constraints": true,
+      "share_of_budget_moved": 0.009254115150636885,
+      "uplift_vs_current_pct": 10.24610141393893
+    },
+    {
+      "approach": "constrained optimiser",
+      "predicted_sales": 662957109.7457213,
+      "respects_constraints": true,
+      "share_of_budget_moved": 0.031206850687258213,
+      "uplift_vs_current_pct": 31.23201461573037
+    }
+  ],
+  "naive_plan_violations": [
+    "2 channels below the per channel floor",
+    "1 channels above the per channel cap",
+    "moves 96.7% of budget against a cap of 25%"
+  ],
+  "uplift_uncertainty": [
+    {
+      "metric": "uplift_pct",
+      "mean": 29.908469910240655,
+      "p05": 19.99264903927797,
+      "p50": 29.22986482868917,
+      "p95": 41.68687691580696,
+      "prob_positive": 1.0,
+      "n_draws": 200
+    }
+  ],
+  "direction_stability_under_cpm_shocks": {
+    "Google_Impressions": 1.0,
+    "Facebook_Impressions": 0.76,
+    "Email_Impressions": 1.0,
+    "Affiliate_Impressions": 1.0,
+    "Paid_Views": 1.0
+  },
+  "runtime_seconds": 4447.0
+}
