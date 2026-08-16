@@ -466,11 +466,19 @@ def cpm_sensitivity(
     Since the CPM figures are assumptions rather than measurements, the useful question is
     not "what is the optimal split" but "which parts of the recommended split hold up when
     my cost assumption is wrong by a factor of two".
+
+    Each shock re-solves against the full posterior, same as the primary recommendation,
+    so the comparison is apples to apples. But that makes every one of these solves as
+    expensive as the primary one, and there are len(channels) * len(shocks) of them, so
+    restarts are cut to 1 here. The primary solve's multi-restart check already established
+    the response surface is well behaved for this data, the same reasoning
+    optimise_with_uncertainty uses to justify one restart per posterior draw.
     """
     cfg = cfg or load_config()
     base_rates = cpm_rates(cfg)
     channels = list(data.channels)
     rows = []
+    sweep_cfg = DotDict({**cfg, "optimizer": {**cfg["optimizer"], "n_restarts": 1}})
 
     for channel in channels:
         for shock in shocks:
@@ -480,7 +488,7 @@ def cpm_sensitivity(
                 [float(df[c].sum()) / 1000.0 * rates.get(c, 0.0) for c in channels]
             )
             try:
-                res = optimise_budget(params, data, spend, cfg, max_lag=max_lag)
+                res = optimise_budget(params, data, spend, sweep_cfg, max_lag=max_lag)
             except ValueError as exc:
                 rows.append(
                     {
