@@ -206,13 +206,3 @@ def plot_budget_allocation(result_frame: pd.DataFrame, cfg: DotDict | None = Non
     ax.legend()
     ax.grid(alpha=0.3, axis="y")
     return _save(fig, "budget_allocation", cfg)
-
-
-def plot_trace_summary(idata, var_names: list[str], cfg: DotDict | None = None) -> Path:
-    """Trace plots for the parameters that carry the interpretation."""
-    import arviz as az
-
-    axes = az.plot_trace(idata, var_names=var_names, compact=True)
-    fig = axes.ravel()[0].figure
-    fig.suptitle("Posterior traces for the transform and hierarchy parameters", y=1.02)
-    return _save(fig, "trace_diagnostics", cfg)

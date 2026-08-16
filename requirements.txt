@@ -9,6 +9,10 @@ statsmodels>=0.14
 pymc>=5.10
 arviz>=0.17
 pytensor>=2.18
+# arviz does not ship a netCDF writer itself, so saving the fitted trace needs a backend.
+# h5netcdf is the writer and h5py is the library it writes through, both are required.
+h5netcdf>=1.3
+h5py>=3.10
 
 # Config, IO, plotting
 pyyaml>=6.0

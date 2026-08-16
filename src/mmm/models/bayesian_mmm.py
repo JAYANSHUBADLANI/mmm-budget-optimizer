@@ -464,11 +464,11 @@ class HierarchicalMMM:
         return int(self.idata.sample_stats["diverging"].to_numpy().sum())
 
     def save(self, path: str | Path) -> Path:
-        import arviz as az
-
+        # The module level az.to_netcdf helper was dropped in arviz 1.x. The method on the
+        # inference object itself exists in both 0.x and 1.x, so it is the portable call.
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
-        az.to_netcdf(self.idata, str(path))
+        self.idata.to_netcdf(str(path))
         logger.info("Saved inference data to %s", path)
         return path
 
