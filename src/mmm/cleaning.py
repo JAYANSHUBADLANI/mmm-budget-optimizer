@@ -95,9 +95,23 @@ def fix_duplicate_rows(
     entity_col: str,
     date_col: str,
     log: CleaningLog | None = None,
-    allow_conflicts: bool = False,
+    on_conflict: str = "raise",
 ) -> tuple[pd.DataFrame, CleaningLog]:
-    """Remove exact duplicate rows and confirm the key is unique afterwards."""
+    """Remove exact duplicate rows and confirm the key is unique afterwards.
+
+    `on_conflict` decides what happens when the same (entity_col, date_col) key carries
+    genuinely different measure values, which is a source conflict rather than a duplicate:
+      "raise" (default): stop and require an explicit decision.
+      "keep_first": keep whichever row appeared first in the input, discard the rest.
+      "average": collapse each conflicting group to one row by averaging every numeric
+        column. Only justified when there is evidence the conflict is double reporting of
+        the same underlying activity, not two genuinely different populations sharing a key.
+    """
+    if on_conflict not in {"raise", "keep_first", "average"}:
+        raise ValueError(
+            f"on_conflict must be 'raise', 'keep_first' or 'average', got {on_conflict!r}"
+        )
+
     log = log or CleaningLog()
     log.rows_in = int(len(df))
 
@@ -105,19 +119,19 @@ def fix_duplicate_rows(
     log.duplicate_entities = diag["duplicate_rows_by_entity"]
     log.conflicting_key_rows = diag["n_conflicting_key_rows"]
 
-    if diag["n_conflicting_key_rows"] > 0 and not allow_conflicts:
+    if diag["n_conflicting_key_rows"] > 0 and on_conflict == "raise":
         raise ValueError(
             f"{diag['n_conflicting_key_rows']} rows share ({entity_col}, {date_col}) but "
             "hold different measure values. That is a source conflict, not a duplicate. "
             "I will not pick a winner automatically. Inspect the rows and decide, or pass "
-            "allow_conflicts=True to keep the first occurrence."
+            "on_conflict='keep_first' or on_conflict='average'."
         )
 
     before = len(df)
     out = df.drop_duplicates(keep="first").reset_index(drop=True)
     log.exact_duplicates_removed = int(before - len(out))
 
-    if allow_conflicts:
+    if on_conflict == "keep_first" and diag["n_conflicting_key_rows"] > 0:
         before_key = len(out)
         out = out.drop_duplicates(subset=[entity_col, date_col], keep="first").reset_index(
             drop=True
@@ -126,7 +140,25 @@ def fix_duplicate_rows(
         if removed_conflicting:
             log.notes.append(
                 f"Kept the first row for {removed_conflicting} conflicting key collisions "
-                "because allow_conflicts was set."
+                "because on_conflict='keep_first' was set."
+            )
+
+    if on_conflict == "average" and diag["n_conflicting_key_rows"] > 0:
+        before_key = len(out)
+        key_cols = [entity_col, date_col]
+        numeric_cols = [c for c in out.select_dtypes(include="number").columns if c not in key_cols]
+        other_cols = [c for c in out.columns if c not in key_cols and c not in numeric_cols]
+        agg = {c: "mean" for c in numeric_cols} | {c: "first" for c in other_cols}
+        out = out.groupby(key_cols, as_index=False, sort=False).agg(agg)
+        out = out[df.columns.tolist()].sort_values(key_cols).reset_index(drop=True)
+        collapsed = int(before_key - len(out))
+        if collapsed:
+            log.notes.append(
+                f"Averaged {collapsed} conflicting key collisions across "
+                f"{before_key - collapsed} groups because on_conflict='average' was set. "
+                "Chosen over summing or keeping one source because the averaged values land "
+                "close to the typical entity's scale, while summing would make the affected "
+                "entity roughly double every other entity in the panel."
             )
 
     log.rows_out = int(len(out))
@@ -206,14 +238,14 @@ def add_panel_index(
 
 
 def clean_primary(
-    df: pd.DataFrame, cfg: DotDict | None = None, allow_conflicts: bool = False
+    df: pd.DataFrame, cfg: DotDict | None = None, on_conflict: str = "raise"
 ) -> tuple[pd.DataFrame, CleaningLog]:
     """Full cleaning pass over the primary panel."""
     cfg = cfg or load_config()
     primary = cfg["data"]["primary"]
     entity, date_col = primary["entity_col"], primary["date_col"]
 
-    out, log = fix_duplicate_rows(df, entity, date_col, allow_conflicts=allow_conflicts)
+    out, log = fix_duplicate_rows(df, entity, date_col, on_conflict=on_conflict)
 
     for agg in cfg["channels"]["suspected_derived"]:
         out, log = drop_derived_columns(

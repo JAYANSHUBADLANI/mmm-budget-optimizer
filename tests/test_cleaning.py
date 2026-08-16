@@ -60,10 +60,28 @@ def test_cleaning_refuses_to_guess_on_conflicting_rows(panel_with_conflicting_ro
 
 def test_conflicting_rows_can_be_kept_explicitly(panel_with_conflicting_rows):
     cleaned, log = cleaning.fix_duplicate_rows(
-        panel_with_conflicting_rows, "Division", "Calendar_Week", allow_conflicts=True
+        panel_with_conflicting_rows, "Division", "Calendar_Week", on_conflict="keep_first"
     )
     assert cleaned.duplicated(subset=["Division", "Calendar_Week"]).sum() == 0
     assert log.conflicting_key_rows > 0
+
+
+def test_conflicting_rows_can_be_averaged(panel_with_conflicting_rows):
+    cleaned, log = cleaning.fix_duplicate_rows(
+        panel_with_conflicting_rows, "Division", "Calendar_Week", on_conflict="average"
+    )
+    assert cleaned.duplicated(subset=["Division", "Calendar_Week"]).sum() == 0
+    assert log.conflicting_key_rows > 0
+
+    conflicted = panel_with_conflicting_rows[
+        panel_with_conflicting_rows.duplicated(subset=["Division", "Calendar_Week"], keep=False)
+    ]
+    for week, group in conflicted.groupby("Calendar_Week"):
+        expected = group["Sales"].mean()
+        actual = cleaned.loc[
+            (cleaned["Division"] == "D") & (cleaned["Calendar_Week"] == week), "Sales"
+        ].iloc[0]
+        assert actual == pytest.approx(expected)
 
 
 def test_derived_column_is_detected_and_dropped(tiny_panel):

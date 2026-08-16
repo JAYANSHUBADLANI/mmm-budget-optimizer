@@ -66,8 +66,12 @@ def main() -> int:
     summary["duplicate_diagnosis"] = diagnosis
 
     # -- 2. Clean ------------------------------------------------------------
+    # Division Z's conflicting rows are resolved by averaging rather than summing or
+    # keeping one source: the averaged values sit close to a typical division's scale,
+    # while summing would make Division Z roughly double every other division in the
+    # panel. See duplicate_diagnosis.json and the cleaning log for the numbers behind this.
     logger.info("Step 2: cleaning")
-    clean, clean_log = cleaning.clean_primary(raw, cfg)
+    clean, clean_log = cleaning.clean_primary(raw, cfg, on_conflict="average")
     io.save_json(clean_log.to_dict(), "cleaning_log", cfg)
     summary["cleaning_log"] = clean_log.to_dict()
 
