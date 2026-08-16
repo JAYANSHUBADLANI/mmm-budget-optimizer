@@ -157,16 +157,28 @@ def run_benchmark(
         ),
         "smoke_mode": smoke,
     }
+    checks["no_divergences"] = checks["n_divergences"] == 0
     checks["all_checks_passed"] = bool(
         checks["all_channels_positive"]
         and checks["holdout_mape_under_30pct"]
         and checks["media_share_plausible"]
+        and checks["no_divergences"]
     )
+    caveats = []
     if smoke:
-        checks["caveat"] = (
+        caveats.append(
             "Run in smoke mode with a small number of draws. Treat these as a wiring check, "
             "not as benchmarked results. Rerun with smoke=False before quoting anything."
         )
+    if checks["n_divergences"] > 0:
+        caveats.append(
+            f"{checks['n_divergences']} divergent transitions during sampling. NUTS did not "
+            "fully explore the posterior, so the contribution and interval estimates above are "
+            "not reliable enough to quote. Increase target_accept or reparameterize the model "
+            "before trusting this benchmark."
+        )
+    if caveats:
+        checks["caveat"] = " ".join(caveats)
 
     return {
         "contributions": contrib,
