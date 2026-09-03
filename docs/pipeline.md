@@ -67,7 +67,7 @@ at runtime rather than at install time. The Dockerfile uses:
 
 ```
 pip install -r requirements.txt --constraint \
-  "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.3/constraints-3.11.txt"
+  "https://raw.githubusercontent.com/apache/airflow/constraints-3.3.0/constraints-3.12.txt"
 ```
 
 If installing Airflow locally rather than in Docker, use the same constraint URL.

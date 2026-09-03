@@ -1,5 +1,7 @@
 # Bayesian marketing mix model with a constrained budget optimiser
 
+[![tests](https://github.com/JAYANSHUBADLANI/mmm-budget-optimizer/actions/workflows/tests.yml/badge.svg)](https://github.com/JAYANSHUBADLANI/mmm-budget-optimizer/actions/workflows/tests.yml)
+
 I built this to answer a question a media team actually has to answer every planning cycle:
 given a fixed budget and five channels with different saturation curves, where should the
 next dollar go, and how confident should anyone be in the answer.

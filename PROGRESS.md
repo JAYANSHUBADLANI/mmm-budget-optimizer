@@ -91,8 +91,9 @@ Done, code complete.
 - Docker Compose: dashboard by default, full Airflow stack behind a profile
 - Makefile wrapping every step
 
-Not executed yet: `dbt run`, `dbt test` and the Airflow DAG have not been run, because
-Airflow and dbt are not installed in the environment the code was written in.
+Not executed yet: `dbt run`, `dbt test` and the Airflow DAG have not been run end to end.
+Neither Airflow nor dbt is installed on the machine this was built on, and the Docker stack
+that would run them has not been brought up.
 
 ## Verification summary
 

@@ -30,8 +30,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from airflow import DAG
-from airflow.operators.bash import BashOperator
-from airflow.operators.python import PythonOperator, ShortCircuitOperator
+from airflow.providers.standard.operators.bash import BashOperator
+from airflow.providers.standard.operators.python import PythonOperator, ShortCircuitOperator
 
 PROJECT_ROOT = Path(os.environ.get("MMM_PROJECT_ROOT", "/opt/project"))
 sys.path.insert(0, str(PROJECT_ROOT / "src"))

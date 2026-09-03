@@ -1,7 +1,7 @@
 # Orchestration and transformation layer.
 # I keep these in a separate file so the modelling environment stays light.
 # Airflow pins its own constraint file, install it with the constraint URL in docs/pipeline.md.
-apache-airflow==2.9.3
+apache-airflow==3.3.0
 dbt-core>=1.7,<1.9
 dbt-duckdb>=1.7
 duckdb>=0.10
