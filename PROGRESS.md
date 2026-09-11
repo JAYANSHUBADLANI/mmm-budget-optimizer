@@ -39,7 +39,7 @@ Verified so far:
 - The model builds, `logp` and `dlogp` compile and evaluate finite, and NUTS samples
 - Full data pipeline runs end to end: the Division Z bug is detected, fixed, and the cleaned
   panel passes every blocking check
-- 64 tests pass and ruff reports no issues
+- 65 tests pass and ruff reports no issues
 - The optimiser comparison was corrected mid build: the naive plan was originally scored
   without constraints, which flattered it. It is now reported unconstrained with a
   feasibility flag, projected onto the feasible set, and against the constrained optimum
